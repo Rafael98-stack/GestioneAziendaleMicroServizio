@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="CodeInsightWorkspaceSettings">
+    <option name="optimizeImportsOnTheFly" value="true" />
+  </component>
+  <component name="ExternalStorageConfigurationManager" enabled="true" />
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/services/config-server/pom.xml" />
+        <option value="$PROJECT_DIR$/services/discovery/pom.xml" />
+        <option value="$PROJECT_DIR$/services/dipendenti/pom.xml" />
+        <option value="$PROJECT_DIR$/services/dipartimenti/pom.xml" />
+        <option value="$PROJECT_DIR$/services/posizioni-lavorative/pom.xml" />
+        <option value="$PROJECT_DIR$/services/timbrature/pom.xml" />
+        <option value="$PROJECT_DIR$/services/commenti/pom.xml" />
+        <option value="$PROJECT_DIR$/services/comunicazioni-aziendali/pom.xml" />
+        <option value="$PROJECT_DIR$/services/newses/pom.xml" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/out" />
+  </component>
+</project>

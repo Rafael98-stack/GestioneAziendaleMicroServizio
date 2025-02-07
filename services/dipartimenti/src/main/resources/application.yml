@@ -18,3 +18,7 @@ spring:
 
 server:
   port: 8090
+
+application:
+  config:
+    posizioni-url: http://localhost:9020/api/v1/posizioni-lavorative

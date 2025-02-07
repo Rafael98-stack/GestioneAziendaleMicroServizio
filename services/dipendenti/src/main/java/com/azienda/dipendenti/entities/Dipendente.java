@@ -33,4 +33,6 @@ public class Dipendente{
 
     @ManyToOne
     private Long dipartimento;
+    @ManyToOne
+    private Long posizione_lavorativa;
 }

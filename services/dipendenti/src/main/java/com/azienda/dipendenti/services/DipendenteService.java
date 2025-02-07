@@ -20,6 +20,8 @@ public class DipendenteService {
     DipendenteRepository dipendenteRepository;
     @Autowired
     DipendenteMapper dipendenteMapper;
+    @Autowired
+    private DipartimentoClient dipartimentoClient;
 
     public DipendenteResponse getDipendenteById(Long id){
         Dipendente dipendente = dipendenteRepository
@@ -37,6 +39,7 @@ public class DipendenteService {
     }
 
     public EntityIdResponse createDipendente(DipendenteRequest request){
+        var dipartimento = dipartimentoClient.getDipartimentoById(request.dipartimento_id());
         Dipendente dipendente = dipendenteRepository.save(dipendenteMapper.toEntity(request));
         return EntityIdResponse
                 .builder()
@@ -45,6 +48,7 @@ public class DipendenteService {
     }
 
     public EntityIdResponse updateDipendente(Long id, DipendenteUpdateRequest request){
+        var dipartimento = dipartimentoClient.getDipartimentoById(request.dipartimento_id());
         Dipendente dipendente = dipendenteRepository
                 .findById(id)
                 .orElseThrow(() -> new DipendenteNotFoundException(String.format("Il dipendente con id %d non esiste", id)));
@@ -55,6 +59,8 @@ public class DipendenteService {
         if (request.luogoNascita() != null) dipendente.setLuogo_nascita(request.luogoNascita());
         if (request.telefono() != null) dipendente.setTelefono(request.telefono());
         if (request.immagineProfilo() != null) dipendente.setImmagine_profilo(request.immagineProfilo());
+        if (request.dipartimento_id() != null) dipendente.setDipartimento(request.dipartimento_id());
+        dipendenteRepository.save(dipendente);
         return EntityIdResponse
                 .builder()
                 .id(dipendente.getId())

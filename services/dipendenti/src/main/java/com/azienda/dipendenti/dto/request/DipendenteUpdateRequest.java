@@ -14,6 +14,7 @@ public record DipendenteUpdateRequest(
         LocalDate dataNascita,
         String luogoNascita,
         String telefono,
-        String immagineProfilo
+        String immagineProfilo,
+        Long dipartimento_id
 ) {
 }

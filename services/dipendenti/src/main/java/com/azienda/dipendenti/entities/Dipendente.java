@@ -30,4 +30,7 @@ public class Dipendente{
     @Column(nullable = false, unique = true)
     private String telefono;
     private String immagine_profilo;
+
+    @ManyToOne
+    private Long dipartimento;
 }

@@ -24,6 +24,7 @@ public record DipendenteRequest(
         String luogoNascita,
         @NotBlank(message = "Il numero di telefono non può essere vuoto")
         String telefono,
-        String immagineProfilo
+        String immagineProfilo,
+        Long dipartimento_id
         ) {
 }

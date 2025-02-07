@@ -7,6 +7,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="dipartimenti" />
         <module name="config-server" />
         <module name="discovery" />
       </profile>
@@ -18,7 +19,6 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="posizioni-lavorative" />
-        <module name="dipartimenti" />
         <module name="timbrature" />
         <module name="newses" />
         <module name="comunicazioni-aziendali" />

@@ -32,6 +32,7 @@ public class DipendenteMapper {
                 .luogo_nascita(request.luogoNascita())
                 .telefono(request.telefono())
                 .immagine_profilo(request.immagineProfilo())
+                .dipartimento(request.dipartimento_id())
                 .build();
     }
 }

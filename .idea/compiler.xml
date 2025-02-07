@@ -10,7 +10,7 @@
         <module name="config-server" />
         <module name="discovery" />
       </profile>
-      <profile name="Annotation profile for timbrature" enabled="true">
+      <profile name="Annotation profile for dipartimenti" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -18,8 +18,8 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
         </processorPath>
         <module name="posizioni-lavorative" />
-        <module name="timbrature" />
         <module name="dipartimenti" />
+        <module name="timbrature" />
         <module name="newses" />
         <module name="comunicazioni-aziendali" />
         <module name="commenti" />

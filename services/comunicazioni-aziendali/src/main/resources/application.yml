@@ -31,3 +31,4 @@ server:
 application:
   config:
     dipendenti-url: http://localhost:9000/api/v1/dipendeti
+    dipartimenti-url: http://localhost:8090/api/v1/dipartimenti

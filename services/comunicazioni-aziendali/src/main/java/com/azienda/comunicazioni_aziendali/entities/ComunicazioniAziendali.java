@@ -1,6 +1,5 @@
 package com.azienda.comunicazioni_aziendali.entities;
 
-import com.azienda.dipendenti.entities.Dipendente;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -20,7 +19,7 @@ public class ComunicazioniAziendali
 
     @ManyToOne
     @JoinColumn(name = "id_dipendente")
-    private Dipendente dipendente;
+    private Long dipendente;
 
 
 }

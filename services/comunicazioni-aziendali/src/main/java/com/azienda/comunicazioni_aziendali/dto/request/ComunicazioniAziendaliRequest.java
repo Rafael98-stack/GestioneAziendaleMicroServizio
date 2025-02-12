@@ -10,7 +10,8 @@ public record ComunicazioniAziendaliRequest(
         String titolo,
         @NotBlank
         String contenuto,
-        Long id_dipendente)
+        Long id_dipendente
+)
 {
 
 }

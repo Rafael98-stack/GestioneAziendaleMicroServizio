@@ -1,5 +1,6 @@
 package com.azienda.comunicazioni_aziendali.services;
 
+import com.azienda.comunicazioni_aziendali.dto.request.ComunicazioniAziendaliRequest;
 import com.azienda.comunicazioni_aziendali.dto.response.ComunicazioniAziendaliResponse;
 import com.azienda.comunicazioni_aziendali.entities.ComunicazioniAziendali;
 import com.azienda.comunicazioni_aziendali.exceptions.ComunicazioniAziendaliNotFoundException;
@@ -7,8 +8,6 @@ import com.azienda.comunicazioni_aziendali.mapper.ComunicazioniAziendaliMapper;
 import com.azienda.comunicazioni_aziendali.repositories.ComunicazioniAziendaliRepository;
 import com.azienda.dipendenti.dto.responses.EntityIdResponse;
 import com.azienda.dipendenti.dto.responses.GenericResponse;
-import com.azienda.dipendenti.entities.Dipendente;
-import com.azienda.dipendenti.exceptions.DipendenteNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,57 +21,53 @@ public class ComunicazioniAziendaleService
   @Autowired
   ComunicazioniAziendaliMapper comunicazioniAziendaliMapper;
   @Autowired
-  Dipendente dipendente;
+  DipedenteClient dipedenteClient;
+  @Autowired
+  DipartimentoClient dipartimentoClient;
 
   public ComunicazioniAziendaliResponse getComunicazioniAziendaliById(Long id){
-    ComunicazioniAziendali comunicazioniAziendali = ComunicazioniAziendaliRepository
-            .
+    ComunicazioniAziendali comunicazioniAziendali = comunicazioniAziendaliRepository.findById(id)
             .orElseThrow(() -> new ComunicazioniAziendaliNotFoundException(String.format("La comunicazione aziendale  con id %d non esiste", id)));
-    return  ComunicazioniAziendaliMapper.toResponse;
+    return  comunicazioniAziendaliMapper.toResponse(comunicazioniAziendali);
   }
 
-  public List<ComunicazioniAziendali> getAll(){
-    return  ComunicazioniAziendaliRepository
+  public List<ComunicazioniAziendaliResponse> getAll(){
+    return  comunicazioniAziendaliRepository
             .findAll()
             .stream()
             .map(comunicazioniAziendaliMapper::toResponse)
             .toList();
   }
 
-  public EntityIdResponse createDipendente(DipendenteRequest request){
-    var dipartimento = dipartimentoClient.getDipartimentoById(request.dipartimento_id());
-    Dipendente dipendente = dipendenteRepository.save(dipendenteMapper.toEntity(request));
+  public EntityIdResponse createComunicazione(ComunicazioniAziendaliRequest request){
+    var dipendente = dipedenteClient.getDipendenteById(request.id_dipendente());
+    ComunicazioniAziendali comunicazioniAziendali = comunicazioniAziendaliRepository.save(comunicazioniAziendaliMapper.toEntity(request));
     return EntityIdResponse
             .builder()
-            .id(dipendente.getId())
+            .id(comunicazioniAziendali.getId())
             .build();
   }
 
-  public EntityIdResponse updateDipendente(Long id, DipendenteUpdateRequest request){
-    var dipartimento = dipartimentoClient.getDipartimentoById(request.dipartimento_id());
-    Dipendente dipendente = dipendenteRepository
+  public EntityIdResponse updateComunicazione(Long id, ComunicazioniAziendaliRequest request){
+    var dipendente = dipedenteClient.getDipendenteById(request.id_dipendente());
+    ComunicazioniAziendali comunicazioniAziendali = comunicazioniAziendaliRepository
             .findById(id)
-            .orElseThrow(() -> new DipendenteNotFoundException(String.format("Il dipendente con id %d non esiste", id)));
-    if (request.nome() != null) dipendente.setNome(request.nome());
-    if (request.cognome() != null) dipendente.setCognome(request.cognome());
-    if (request.email() != null) dipendente.setEmail(request.email());
-    if (request.dataNascita() != null) dipendente.setData_nascita(request.dataNascita());
-    if (request.luogoNascita() != null) dipendente.setLuogo_nascita(request.luogoNascita());
-    if (request.telefono() != null) dipendente.setTelefono(request.telefono());
-    if (request.immagineProfilo() != null) dipendente.setImmagine_profilo(request.immagineProfilo());
-    if (request.dipartimento_id() != null) dipendente.setDipartimento(request.dipartimento_id());
-    dipendenteRepository.save(dipendente);
+            .orElseThrow(() -> new ComunicazioniAziendaliNotFoundException(String.format("Il comunicazioniAziendali con id %d non esiste", id)));
+    if (request.id_dipendente() != null) comunicazioniAziendali.setDipendente(request.id_dipendente());
+    if (request.titolo() != null) comunicazioniAziendali.setTitolo(request.titolo());
+    if (request.contenuto() != null) comunicazioniAziendali.setContenuto(request.contenuto());
+    comunicazioniAziendaliRepository.save(comunicazioniAziendali);
     return EntityIdResponse
             .builder()
-            .id(dipendente.getId())
+            .id(comunicazioniAziendali.getId())
             .build();
   }
 
-  public GenericResponse deleteDipendenteById(Long id){
-    dipendenteRepository.deleteById(id);
+  public GenericResponse deleteComunicazioneById(Long id){
+    comunicazioniAziendaliRepository.deleteById(id);
     return GenericResponse
             .builder()
-            .message(String.format("Il dipendente con id %d è stato eliminato", id))
+            .message(String.format("La Comunicazione con id %d è stato eliminato", id))
             .build();
   }
 

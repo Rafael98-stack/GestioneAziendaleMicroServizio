@@ -72,6 +72,15 @@ services:
     networks:
       - azienda_network
 
+  mail-dev:
+    container_name: azienda_maildev
+    image: maildev/maildev
+    ports:
+      - 1080:1080
+      - 1025:1025
+    networks:
+      - azienda_network
+
 networks:
   azienda_network:
     driver: bridge

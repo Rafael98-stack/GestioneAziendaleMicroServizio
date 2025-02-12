@@ -1,9 +1,12 @@
 package com.azienda.comunicazioni_aziendali.services;
 
 import com.azienda.comunicazioni_aziendali.dto.request.ComunicazioniAziendaliRequest;
+import com.azienda.comunicazioni_aziendali.dto.request.ComunicazioniAziendaliUpdateRequest;
 import com.azienda.comunicazioni_aziendali.dto.response.ComunicazioniAziendaliResponse;
 import com.azienda.comunicazioni_aziendali.entities.ComunicazioniAziendali;
 import com.azienda.comunicazioni_aziendali.exceptions.ComunicazioniAziendaliNotFoundException;
+import com.azienda.comunicazioni_aziendali.kafka.ComunicazioneAziendaleMessage;
+import com.azienda.comunicazioni_aziendali.kafka.ComunicazioniProducer;
 import com.azienda.comunicazioni_aziendali.mapper.ComunicazioniAziendaliMapper;
 import com.azienda.comunicazioni_aziendali.repositories.ComunicazioniAziendaliRepository;
 import com.azienda.dipendenti.dto.responses.EntityIdResponse;
@@ -11,6 +14,7 @@ import com.azienda.dipendenti.dto.responses.GenericResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -23,7 +27,7 @@ public class ComunicazioniAziendaleService
   @Autowired
   DipedenteClient dipedenteClient;
   @Autowired
-  DipartimentoClient dipartimentoClient;
+  ComunicazioniProducer comunicazioniProducer;
 
   public ComunicazioniAziendaliResponse getComunicazioniAziendaliById(Long id){
     ComunicazioniAziendali comunicazioniAziendali = comunicazioniAziendaliRepository.findById(id)
@@ -42,13 +46,21 @@ public class ComunicazioniAziendaleService
   public EntityIdResponse createComunicazione(ComunicazioniAziendaliRequest request){
     var dipendente = dipedenteClient.getDipendenteById(request.id_dipendente());
     ComunicazioniAziendali comunicazioniAziendali = comunicazioniAziendaliRepository.save(comunicazioniAziendaliMapper.toEntity(request));
+    comunicazioniProducer.sendConfermaComunicazione(ComunicazioneAziendaleMessage
+            .builder()
+            .id(comunicazioniAziendali.getId())
+            .contenuto(comunicazioniAziendali.getContenuto())
+            .titolo(comunicazioniAziendali.getTitolo())
+            .id_dipendente(comunicazioniAziendali.getDipendente())
+            .timestamp(LocalDateTime.now())
+            .build());
     return EntityIdResponse
             .builder()
             .id(comunicazioniAziendali.getId())
             .build();
   }
 
-  public EntityIdResponse updateComunicazione(Long id, ComunicazioniAziendaliRequest request){
+  public EntityIdResponse updateComunicazione(Long id, ComunicazioniAziendaliUpdateRequest request){
     var dipendente = dipedenteClient.getDipendenteById(request.id_dipendente());
     ComunicazioniAziendali comunicazioniAziendali = comunicazioniAziendaliRepository
             .findById(id)

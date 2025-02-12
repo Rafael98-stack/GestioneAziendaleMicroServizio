@@ -31,16 +31,16 @@ public class ComunicazioniAziendaliController
 
     @PostMapping("/create")
     public ResponseEntity<EntityIdResponse> createComunicazioniAziendali(@RequestBody ComunicazioniAziendaliRequest request){
-        return new ResponseEntity<>(comunicazioniAziendaleService.createComunicazioniAziendali(request), HttpStatus.CREATED);
+        return new ResponseEntity<>(comunicazioniAziendaleService.createComunicazione(request), HttpStatus.CREATED);
     }
 
     @PutMapping("/update/{id}")
     public ResponseEntity<EntityIdResponse> updateComunicazioniAziendali(@PathVariable Long id, @RequestBody ComunicazioniAziendaliUpdateRequest request){
-        return new ResponseEntity<>(comunicazioniAziendaleService.updateComunicazioniAziendali(id, request), HttpStatus.CREATED);
+        return new ResponseEntity<>(comunicazioniAziendaleService.updateComunicazione(id, request), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<GenericResponse> deleteComunicazioniAziendaliById(@PathVariable Long id){
-        return new ResponseEntity<>(comunicazioniAziendaleService.deleteComunicazioniAziendaliById(id), HttpStatus.OK);
+        return new ResponseEntity<>(comunicazioniAziendaleService.deleteComunicazioneById(id), HttpStatus.OK);
     }
 }

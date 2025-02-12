@@ -13,7 +13,7 @@ public class ComunicazioniProducer {
     @Autowired
     private KafkaTemplate<String, ComunicazioneAziendaleMessage> kafkaTemplate;
 
-    public void sendConfermaOrdine(ComunicazioneAziendaleMessage comunicazioneAziendaleMessage) {
+    public void sendConfermaComunicazione(ComunicazioneAziendaleMessage comunicazioneAziendaleMessage) {
         Message<ComunicazioneAziendaleMessage> message = MessageBuilder
                 .withPayload(comunicazioneAziendaleMessage)
                 .setHeader(KafkaHeaders.TOPIC, "order-topic")

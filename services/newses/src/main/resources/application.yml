@@ -1,0 +1,31 @@
+spring:
+  application:
+    name: newses-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/newses
+    username: azienda
+    password: mypassword
+  jpa:
+    hibernate:
+      ddl-auto: create
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+  kafka:
+    producer:
+      bootstrap-server: localhost:9092
+      group-id: order-group
+      key-serializer: org.apache.kafka.common.serialization.StringSerializer
+      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
+      properties:
+        spring.json.type.mapping: orderConfirmation:com.azienda.newses.kafka.OrderConfirmation
+
+server:
+  port: 8073
+
+application:
+  config:
+    posizioni-lavorative-url: http://localhost:8072/api/v1/posizionelavorativa

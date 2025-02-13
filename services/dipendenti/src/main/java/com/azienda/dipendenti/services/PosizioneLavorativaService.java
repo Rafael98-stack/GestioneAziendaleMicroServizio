@@ -92,4 +92,8 @@ public class PosizioneLavorativaService {
     public void deleteById(Long id){
         posizioneLavorativaRepository.deleteById(id);
     }
+
+    public String getNomePosizioneById(Long id) {
+        return posizioneLavorativaRepository.getType(id);
+    }
 }

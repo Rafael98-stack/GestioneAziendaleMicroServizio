@@ -11,12 +11,20 @@
         <module name="discovery" />
         <module name="dipendenti" />
       </profile>
+      <profile name="Annotation profile for newses" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <processorPath useClasspath="false">
+          <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/unknown/lombok-unknown.jar" />
+        </processorPath>
+        <module name="newses" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="commenti" target="17" />
       <module name="comunicazioni-aziendali" target="17" />
       <module name="dipartimenti" target="17" />
-      <module name="newses" target="17" />
       <module name="posizioni-lavorative" target="17" />
       <module name="timbrature" target="17" />
     </bytecodeTargetLevel>

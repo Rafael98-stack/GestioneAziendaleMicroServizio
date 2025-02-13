@@ -1,8 +1,8 @@
-package com.azienda.newses.mapper;
+package com.azienda.newses.mappers;
 
-import com.azienda.comunicazioni_aziendali.dto.request.ComunicazioniAziendaliRequest;
-import com.azienda.comunicazioni_aziendali.dto.response.ComunicazioniAziendaliResponse;
-import com.azienda.comunicazioni_aziendali.entities.ComunicazioniAziendali;
+import com.azienda.newses.ComunicazioniAziendaliResponse;
+import com.azienda.newses.entities.ComunicazioniAziendali;
+import com.azienda.newses.request.ComunicazioniAziendaliRequest;
 import org.springframework.stereotype.Service;
 
 @Service

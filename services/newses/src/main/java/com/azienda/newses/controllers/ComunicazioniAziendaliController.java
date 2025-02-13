@@ -1,11 +1,11 @@
 package com.azienda.newses.controllers;
 
-import com.azienda.comunicazioni_aziendali.dto.request.ComunicazioniAziendaliRequest;
-import com.azienda.comunicazioni_aziendali.dto.request.ComunicazioniAziendaliUpdateRequest;
-import com.azienda.comunicazioni_aziendali.dto.response.ComunicazioniAziendaliResponse;
-import com.azienda.comunicazioni_aziendali.services.ComunicazioniAziendaleService;
-import com.azienda.dipendenti.dto.responses.EntityIdResponse;
-import com.azienda.dipendenti.dto.responses.GenericResponse;
+import com.azienda.newses.ComunicazioniAziendaliResponse;
+import com.azienda.newses.dto.response.EntityIdResponse;
+import com.azienda.newses.dto.response.GenericResponse;
+import com.azienda.newses.request.ComunicazioniAziendaliRequest;
+import com.azienda.newses.request.ComunicazioniAziendaliUpdateRequest;
+import com.azienda.newses.services.ComunicazioniAziendaleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

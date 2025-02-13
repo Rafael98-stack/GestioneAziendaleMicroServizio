@@ -1,6 +1,5 @@
 package com.azienda.newses.kafka;
 
-import com.azienda.comunicazioni_aziendali.kafka.ComunicazioneAziendaleMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.kafka.support.KafkaHeaders;

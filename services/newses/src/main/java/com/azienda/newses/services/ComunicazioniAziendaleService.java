@@ -1,17 +1,17 @@
 package com.azienda.newses.services;
 
-import com.azienda.comunicazioni_aziendali.dto.request.ComunicazioniAziendaliRequest;
-import com.azienda.comunicazioni_aziendali.dto.request.ComunicazioniAziendaliUpdateRequest;
-import com.azienda.comunicazioni_aziendali.dto.response.ComunicazioniAziendaliResponse;
-import com.azienda.comunicazioni_aziendali.entities.ComunicazioniAziendali;
-import com.azienda.comunicazioni_aziendali.exceptions.ComunicazioniAziendaliNotFoundException;
-import com.azienda.comunicazioni_aziendali.kafka.ComunicazioneAziendaleMessage;
-import com.azienda.comunicazioni_aziendali.kafka.ComunicazioniProducer;
-import com.azienda.comunicazioni_aziendali.mapper.ComunicazioniAziendaliMapper;
-import com.azienda.comunicazioni_aziendali.repositories.ComunicazioniAziendaliRepository;
-import com.azienda.comunicazioni_aziendali.services.DipedenteClient;
-import com.azienda.dipendenti.dto.responses.EntityIdResponse;
-import com.azienda.dipendenti.dto.responses.GenericResponse;
+import com.azienda.newses.ComunicazioniAziendaliResponse;
+import com.azienda.newses.DipedenteClient;
+import com.azienda.newses.dto.response.EntityIdResponse;
+import com.azienda.newses.dto.response.GenericResponse;
+import com.azienda.newses.entities.ComunicazioniAziendali;
+import com.azienda.newses.exceptions.ComunicazioniAziendaliNotFoundException;
+import com.azienda.newses.kafka.ComunicazioneAziendaleMessage;
+import com.azienda.newses.kafka.ComunicazioniProducer;
+import com.azienda.newses.mappers.ComunicazioniAziendaliMapper;
+import com.azienda.newses.repositories.ComunicazioniAziendaliRepository;
+import com.azienda.newses.request.ComunicazioniAziendaliRequest;
+import com.azienda.newses.request.ComunicazioniAziendaliUpdateRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

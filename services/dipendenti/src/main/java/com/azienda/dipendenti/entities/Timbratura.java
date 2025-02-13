@@ -1,0 +1,32 @@
+package com.azienda.dipendenti.entities;
+
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
+import lombok.*;
+
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.List;
+
+@Entity
+@NoArgsConstructor
+@AllArgsConstructor
+@Setter
+@Getter
+@Builder
+
+public class Timbratura {
+    @Id
+    @GeneratedValue
+    private Long id;
+    private LocalDateTime orario_entrata;
+    private LocalDateTime inizio_pranzo;
+    private LocalDateTime fine_pranzo;
+    private LocalDateTime uscita;
+    private LocalDate data_corrente;
+
+    @OneToMany(mappedBy = "timbratura")
+    private List<Dipendente> dipendenti;
+}

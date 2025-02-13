@@ -4,7 +4,6 @@ import lombok.Builder;
 
 @Builder
 public record NewsResponse(
-        Long id,
-        String titolo,
-        String contenuto,
-        String imagine){}
+        Long id
+) {
+}

@@ -55,7 +55,7 @@ public class NewsService
         if (posizioneLavorativaClient.getNomePosizioneById(posizioneLavorativa.id()).equalsIgnoreCase("publisher"))
         {
             News news = newsMapper.fromNewsRequest(request);
-            news.setLike(0l);;
+            news.setLike(0l);
             return NewsResponse
                     .builder()
                     .id(newsRepository.save(news).getId())

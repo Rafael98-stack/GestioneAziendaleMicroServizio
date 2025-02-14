@@ -15,8 +15,6 @@ public class Commento {
     private Long id;
     private String contenuto;
 
-    @ManyToOne
-    @JoinColumn(name = "id_dipendente")
     private Long dipendente;
 
     @ManyToOne

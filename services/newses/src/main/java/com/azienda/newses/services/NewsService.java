@@ -1,7 +1,6 @@
 package com.azienda.newses.services;
 
-import com.azienda.dipendenti.entities.Dipendente;
-import com.azienda.dipendenti.repositories.DipendeteRepository;
+import com.azienda.newses.DipedenteClient;
 import com.azienda.newses.dto.request.NewsRequest;
 import com.azienda.newses.dto.request.NewsUpdateRequest;
 import com.azienda.newses.dto.response.NewsResponse;
@@ -11,9 +10,11 @@ import com.azienda.newses.mappers.NewsMapper;
 import com.azienda.newses.repositories.NewsRepository;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+@Service
 public class NewsService
 {
    @Autowired
@@ -21,13 +22,9 @@ public class NewsService
    @Autowired
    NewsMapper newsMapper;
    @Autowired
-   Dipendente dipendente;
-   @Autowired
-    DipendeteRepository dipendeteRepository;
-   @Autowired
-   NewsUpdateRequest newsUpdateRequest;
-   @Autowired
    PosizioneLavorativaClient posizioneLavorativaClient;
+   @Autowired
+   DipedenteClient dipedenteClient;
 
 
     public NewsResponse getNewsById(Long id)
@@ -46,16 +43,12 @@ public class NewsService
     }
 
     public NewsResponse createNews(@Valid NewsRequest request) throws Exception {
-        Dipendente dipendente = dipendeteRepository.findById(request.id_dipendente())
-                .orElseThrow(() -> new Exception("Dipendente non esiste"));
+        dipedenteClient.getDipendenteById(request.id_dipendente());
 
-        var posizioneLavorativa = posizioneLavorativaClient.getPosizioneLavorativaById(dipendente.getPosizioneLavorativa().getId());
-
-
-        if (posizioneLavorativaClient.getNomePosizioneById(posizioneLavorativa.id()).equalsIgnoreCase("publisher"))
+        if (posizioneLavorativaClient.getNomePosizioneById(request.id_dipendente()).equalsIgnoreCase("publisher"))
         {
             News news = newsMapper.fromNewsRequest(request);
-            news.setLike(0l);
+            news.setLikes(0l);
             return NewsResponse
                     .builder()
                     .id(newsRepository.save(news).getId())
@@ -67,17 +60,14 @@ public class NewsService
     }
 
     public NewsResponse updateNews(Long id, @Valid NewsUpdateRequest request) throws Exception {
-        Dipendente dipendente = dipendeteRepository.findById(newsUpdateRequest.id_dipendente())
-                .orElseThrow(() -> new Exception("Dipendente non esiste"));
+        dipedenteClient.getDipendenteById(request.id_dipendente());
 
-        var posizioneLavorativa = posizioneLavorativaClient.getPosizioneLavorativaById(dipendente.getPosizioneLavorativa().getId());
-
-        if (posizioneLavorativaClient.getNomePosizioneById(posizioneLavorativa.id()).equalsIgnoreCase("publisher")){
+        if (posizioneLavorativaClient.getNomePosizioneById(request.id_dipendente()).equalsIgnoreCase("publisher")){
             News news = newsRepository.findById(id)
                     .orElseThrow(() -> new NewsNotFoundException("news non esistente"));
-            news.setTitolo(newsUpdateRequest.titolo());
-            news.setContenuto(newsUpdateRequest.contenuto());
-            news.setImmagine(newsUpdateRequest.immagine());
+            news.setTitolo(request.titolo());
+            news.setContenuto(request.contenuto());
+            news.setImmagine(request.immagine());
             return NewsResponse
                     .builder()
                     .id( newsRepository.save(news).getId())
@@ -98,7 +88,7 @@ public class NewsService
     {
         News news = newsRepository.findById(id)
                 .orElseThrow(() -> new NewsNotFoundException("news non esistente"));
-        news.setLike(news.getLike() + 1);
+        news.setLikes(news.getLikes() + 1);
         newsRepository.save(news);
     }
 }

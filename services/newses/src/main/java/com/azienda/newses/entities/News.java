@@ -1,6 +1,5 @@
 package com.azienda.newses.entities;
 
-import com.azienda.dipendenti.entities.Dipendente;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -22,7 +21,7 @@ public class News
     private Long id;
     private String titolo;
     private String contenuto;
-    private Long like = 0L;
+    private Long likes = 0L;
     private String immagine;
 
  public News(String contenuto, String titolo, String immagine, Long dipendente) {
@@ -32,8 +31,6 @@ public class News
   this.dipendente = dipendente;
  }
 
- @ManyToOne
-    @JoinColumn(name = "id_dipendente")
     private Long dipendente;
 
     @OneToMany

@@ -17,8 +17,6 @@ public class ComunicazioniAziendali
     private String titolo;
     private String contenuto;
 
-    @ManyToOne
-    @JoinColumn(name = "id_dipendente")
     private Long dipendente;
 
 

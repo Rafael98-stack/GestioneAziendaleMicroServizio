@@ -12,7 +12,7 @@ public interface PosizioneLavorativaClient {
     PosizioneLavorativaResponse getPosizioneLavorativaById(@PathVariable Long id);
 
     @GetMapping("/type/{id}")
-    public String getNomePosizioneById(@PathVariable Long id);
+    String getNomePosizioneById(@PathVariable Long id);
 
 
 }

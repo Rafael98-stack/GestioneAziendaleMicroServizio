@@ -2,8 +2,9 @@ package com.azienda.newses.controllers;
 
 import com.azienda.newses.dto.request.NewsRequest;
 import com.azienda.newses.dto.request.NewsUpdateRequest;
+import com.azienda.newses.dto.response.EntityIdResponse;
 import com.azienda.newses.dto.response.NewsResponse;
-import com.azienda.newses.entities.News;
+import com.azienda.newses.mappers.NewsMapper;
 import com.azienda.newses.services.NewsService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,9 @@ public class NewsController
 {
     @Autowired
     NewsService newsService;
+
+    @Autowired
+    NewsMapper newsMapper;
 
     @GetMapping("/get/{id}")
     public ResponseEntity<NewsResponse> getById(@PathVariable Long id){
@@ -41,15 +45,14 @@ public class NewsController
         return new ResponseEntity<>(newsService.updateNews(id, request), HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<NewsResponse> deleteById(@PathVariable Long id){
+    public ResponseEntity<EntityIdResponse> deleteById(@PathVariable Long id){
         newsService.removeNews(id);
-        return new ResponseEntity<>(
-                new NewsResponse(id),HttpStatus.OK);
+        return new ResponseEntity<>(new EntityIdResponse(id),HttpStatus.OK);
     }
 
     @PutMapping("/like/{id}")
-    public  ResponseEntity<NewsResponse> like(@PathVariable Long id){
+    public  ResponseEntity<EntityIdResponse> like(@PathVariable Long id){
         newsService.likeNews(id);
-        return new ResponseEntity<>(new NewsResponse(id), HttpStatus.OK);
+        return new ResponseEntity<>(new EntityIdResponse(id), HttpStatus.OK);
     }
 }

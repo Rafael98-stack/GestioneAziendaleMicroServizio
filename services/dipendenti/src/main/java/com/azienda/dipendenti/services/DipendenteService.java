@@ -51,18 +51,6 @@ public class DipendenteService {
                 .orElseThrow(() -> new EntityNotFoundException("dipendente con id " + id_dipendente + " non trovato"));
     }
 
-    public Dipendente getByEmail(String email) throws Exception {
-        return dipendeteRepository
-                .findByEmail(email)
-                .orElseThrow(() -> new Exception("utente con email " + email + " non trovato"));
-    }
-
-    public Dipendente getByRegistrationToken(String token) throws Exception {
-        return dipendeteRepository
-                .findByRegistrationToken(token)
-                .orElseThrow(() -> new Exception("utente con token " + token + " non trovato"));
-    }
-
     public List<Dipendente> getAllDipendenti(){
         return dipendeteRepository.findAll();
     }

@@ -48,18 +48,14 @@ public class Dipendente {
     @ManyToOne
     @JoinColumn(name = "id_dipartimento")
     private Dipartimento dipartimento;
-    @OneToMany(mappedBy = "dipendente")
     private List<Long> commenti;
-    @OneToMany(mappedBy = "dipendente")
     private Set<Long> newses;
-    @OneToMany(mappedBy = "dipendente")
     private Set<Long> comunicazioni_aziendali;
-    @ManyToOne()
+    @ManyToOne
     @JoinColumn(name = "id_posizione")
     private PosizioneLavorativa posizioneLavorativa;
-    @ManyToOne()
-    @JoinColumn(name = "id_tibratura")
-    private Timbratura timbratura;
+    @OneToMany(mappedBy = "dipendente")
+    private List<Timbratura> timbratura;
     @Column(name = "last_login")
     private LocalDateTime lastLogin;
     @LastModifiedDate

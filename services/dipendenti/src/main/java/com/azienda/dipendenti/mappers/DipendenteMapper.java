@@ -51,8 +51,6 @@ public class DipendenteMapper {
                 .nome(dipendenteRequestUpdate.nome())
                 .dipartimento(dipartimentoRepository.findById(dipendenteRequestUpdate.id_dipartimento())
                         .orElseThrow(()-> new Exception("Dipartimento con id " + dipendenteRequestUpdate.id_dipartimento() + " non trovato")))
-                .timbratura(timbraturaRepository.findById(dipendenteRequestUpdate.id_timbratura())
-                        .orElseThrow(()-> new Exception("Timbratura con id " + dipendenteRequestUpdate.id_timbratura() + " non trovato")))
                 .luogo_nascita(dipendenteRequestUpdate.luogo_nascita())
                 .telefono(dipendenteRequestUpdate.telefono())
                 .immagine_profilo(dipendenteRequestUpdate.immagine_profilo())

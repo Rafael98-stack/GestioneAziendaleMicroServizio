@@ -46,8 +46,8 @@ public class PosizioneLavorativaController {
     }
 
     @GetMapping("/type/{id}")
-     public String getNomePosizioneById(Long id)throws Exception {
-        return posizioneLavorativaService.getNomePosizioneById();
+     public String getNomePosizioneById(@PathVariable Long id)throws Exception {
+        return posizioneLavorativaService.nomePosizioneDipendente(id);
     }
 
 }

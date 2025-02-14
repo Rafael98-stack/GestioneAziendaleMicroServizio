@@ -22,14 +22,13 @@ public class CommentoService {
 
     private final CommentoMapper commentoMapper;
 
-
-    private final DipedenteClient dipedenteClient;
+    @Autowired
+    private DipedenteClient dipedenteClient;
 
     @Autowired
-    public CommentoService(CommentoRepository commentoRepository, CommentoMapper commentoMapper, DipedenteClient dipedenteClient) {
+    public CommentoService(CommentoRepository commentoRepository, CommentoMapper commentoMapper) {
         this.commentoRepository = commentoRepository;
         this.commentoMapper = commentoMapper;
-        this.dipedenteClient = dipedenteClient;
     }
 
     public CommentoResponse insertCommento(CommentoRequestInsert commentoRequestInsert) throws Exception {

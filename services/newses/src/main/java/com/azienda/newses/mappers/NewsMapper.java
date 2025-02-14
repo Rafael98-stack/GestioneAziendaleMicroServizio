@@ -17,12 +17,13 @@ public class NewsMapper
                 .titolo(news.getTitolo())
                 .contenuto(news.getContenuto())
                 .imagine(news.getImmagine())
+                .id_dipendente(news.getDipendente())
                 .build();
     }
 
     public News fromNewsRequest(@Valid NewsRequest request)
     {
-        News news = new News(request.immagine(), request.titolo(), request.contenuto(), request.id_dipendente(),request.like());
+        News news = new News(request.immagine(), request.titolo(), request.contenuto(), request.id_dipendente());
         return news;
     }
 }

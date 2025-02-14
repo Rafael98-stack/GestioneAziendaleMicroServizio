@@ -88,7 +88,7 @@ public class PosizioneLavorativaService {
         posizioneLavorativaRepository.deleteById(id);
     }
 
-    public String getNomePosizioneById(Long id) {
-        return posizioneLavorativaRepository.getType(id);
+    public String nomePosizioneDipendente(Long id_dip){
+        return dipendeteRepository.findById(id_dip).orElseThrow().getPosizioneLavorativa().getNome();
     }
 }

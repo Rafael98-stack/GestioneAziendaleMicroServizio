@@ -45,4 +45,9 @@ public class PosizioneLavorativaController {
                 new PosizioneLavorativaResponse(id),HttpStatus.OK);
     }
 
+    @GetMapping("/type/{id}")
+     public String getNomePosizioneById(Long id)throws Exception {
+        return posizioneLavorativaService.getNomePosizioneById();
+    }
+
 }

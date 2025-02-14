@@ -1,7 +1,9 @@
 package com.azienda.newses.mappers;
 
+import com.azienda.newses.dto.request.NewsRequest;
 import com.azienda.newses.dto.response.NewsResponse;
 import com.azienda.newses.entities.News;
+import jakarta.validation.Valid;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -16,5 +18,11 @@ public class NewsMapper
                 .contenuto(news.getContenuto())
                 .imagine(news.getImmagine())
                 .build();
+    }
+
+    public News fromNewsRequest(@Valid NewsRequest request)
+    {
+        News news = new News(request.immagine(), request.titolo(), request.contenuto(), request.id_dipendente(),request.like());
+        return news;
     }
 }

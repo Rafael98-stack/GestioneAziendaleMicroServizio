@@ -7,7 +7,8 @@ public record NewsRequest(
         String titolo,
         String contenuto,
         Long  id_dipendente,
-        String immagine
+        String immagine,
+        Long like
 )
 {
 

@@ -1,10 +1,13 @@
 package com.azienda.dipendenti.entities;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
+import jakarta.persistence.OneToMany;
 import lombok.*;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -20,11 +23,9 @@ public class Dipartimento {
     private String nome;
     private String descrizione;
 
-    @ManyToMany
-    @JoinTable(
-            name = "dipartimento_posizione",
-            joinColumns = @JoinColumn(name = "id_dipartimento"),
-            inverseJoinColumns = @JoinColumn(name = "id_posizione")
-    )
-    private Set<PosizioneLavorativa> posizioniLavorative = new HashSet<>();
+    @OneToMany (mappedBy = "dipartimento")
+    private List<Dipendente> dipendenti = new ArrayList<>();
+
+    @OneToMany (mappedBy = "dipartimento")
+    private List<PosizioneLavorativa> posizioniLavorative = new ArrayList<>();
 }

@@ -34,7 +34,7 @@ public class PosizioneLavorativaController {
         return new ResponseEntity<>(posizioneLavorativaService.updatePosizioneById(id, request), HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<PosizioneLavorativaResponse> create(@RequestBody @Valid PosizioneLavorativaRequestInsert request){
+    public ResponseEntity<PosizioneLavorativaResponse> create(@RequestBody @Valid PosizioneLavorativaRequestInsert request) throws Exception {
         return new ResponseEntity<>(posizioneLavorativaService.create(request), HttpStatus.CREATED);
     }
 

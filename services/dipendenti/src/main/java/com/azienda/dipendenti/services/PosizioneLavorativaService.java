@@ -13,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class PosizioneLavorativaService {
@@ -24,13 +23,16 @@ public class PosizioneLavorativaService {
 
     private final DipartimentoRepository dipartimentoRepository;
 
+    private final DipartimentoService dipartimentoService;
+
     private final DipendeteRepository dipendeteRepository;
 
     @Autowired
-    public PosizioneLavorativaService(PosizioneLavorativaRepository posizioneLavorativaRepository, PosizioneLavorativaMapper posizioneLavorativaMapper, DipartimentoRepository dipartimentoRepository, DipendeteRepository dipendeteRepository) {
+    public PosizioneLavorativaService(PosizioneLavorativaRepository posizioneLavorativaRepository, PosizioneLavorativaMapper posizioneLavorativaMapper, DipartimentoRepository dipartimentoRepository, DipartimentoService dipartimentoService, DipendeteRepository dipendeteRepository) {
         this.posizioneLavorativaRepository = posizioneLavorativaRepository;
         this.posizioneLavorativaMapper = posizioneLavorativaMapper;
         this.dipartimentoRepository = dipartimentoRepository;
+        this.dipartimentoService = dipartimentoService;
         this.dipendeteRepository = dipendeteRepository;
     }
 
@@ -46,7 +48,7 @@ public class PosizioneLavorativaService {
         return posizioneLavorativaRepository.findAll();
     }
 
-    public PosizioneLavorativaResponse create(PosizioneLavorativaRequestInsert request){
+    public PosizioneLavorativaResponse create(PosizioneLavorativaRequestInsert request) throws Exception {
         PosizioneLavorativa posizioneLavorativa = posizioneLavorativaMapper.fromPosizioneLavorativaRequest(request);
         return PosizioneLavorativaResponse
                 .builder()
@@ -58,7 +60,7 @@ public class PosizioneLavorativaService {
         PosizioneLavorativa posizioneLavorativa = posizioneLavorativaRepository.findById(id)
                 .orElseThrow(() -> new Exception("Posizione non trovata"));
         if (posizioneLavorativaUpdate.id_dipendente() == null &&
-                posizioneLavorativaUpdate.dipartimenti() == null){
+                posizioneLavorativaUpdate.dipartimento() == null){
             posizioneLavorativa.setNome(posizioneLavorativaUpdate.nome());
             posizioneLavorativa.setDescrizione(posizioneLavorativaUpdate.descrizione());
             return PosizioneLavorativaResponse
@@ -74,14 +76,7 @@ public class PosizioneLavorativaService {
 
         posizioneLavorativa.setNome(posizioneLavorativaUpdate.nome());
         posizioneLavorativa.setDescrizione(posizioneLavorativaUpdate.descrizione());
-        posizioneLavorativa.setDipartimenti(posizioneLavorativaUpdate.dipartimenti().stream().map(id_dip -> {
-            try {
-                return dipartimentoRepository.findById(id_dip)
-                        .orElseThrow(() ->  new Exception("Dipartimento non trovato"));
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }).collect(Collectors.toSet()));
+        posizioneLavorativa.setDipartimento(dipartimentoService.getDipartimentoById(posizioneLavorativaUpdate.dipartimento()));
 
         return PosizioneLavorativaResponse
                 .builder()

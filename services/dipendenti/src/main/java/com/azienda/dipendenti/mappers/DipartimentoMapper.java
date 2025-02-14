@@ -27,7 +27,7 @@ public class DipartimentoMapper {
                     } catch (Exception e) {
                         throw new RuntimeException(e);
                     }
-                }).collect(Collectors.toSet()))
+                }).collect(Collectors.toList()))
                 .build();
     }
 }

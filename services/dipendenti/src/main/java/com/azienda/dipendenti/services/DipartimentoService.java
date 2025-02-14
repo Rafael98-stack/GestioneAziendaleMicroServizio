@@ -71,7 +71,7 @@ public class DipartimentoService {
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
-        }).collect(Collectors.toSet()));
+        }).collect(Collectors.toList()));
 
         Dipendente dipendente = dipendeteRepository.findById(dipartimentoRequestUpdate.id_dipedente())
                 .orElseThrow(() -> new Exception("Dipendente con id " + dipartimentoRequestUpdate.id_dipedente() + " non trovato"));

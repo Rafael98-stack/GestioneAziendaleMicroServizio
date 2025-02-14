@@ -1,14 +1,10 @@
 package com.azienda.dipendenti.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -27,6 +23,7 @@ public class Timbratura {
     private LocalDateTime uscita;
     private LocalDate data_corrente;
 
-    @OneToMany(mappedBy = "timbratura")
-    private List<Dipendente> dipendenti;
+    @ManyToOne
+    @JoinColumn(name = "id_dipendente")
+    private Dipendente dipendente;
 }

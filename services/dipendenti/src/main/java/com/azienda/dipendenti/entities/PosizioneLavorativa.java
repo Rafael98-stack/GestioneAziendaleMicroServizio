@@ -3,7 +3,7 @@ package com.azienda.dipendenti.entities;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @NoArgsConstructor
@@ -20,11 +20,11 @@ public class PosizioneLavorativa {
 
     // Da ricordare che mappedBy vuole esattamente il nome della variabile presente nell'altra entità in cui è influenzata la relazione
     // Come nel nostro caso nell'entità Dipartimento:  private Set<PosizioneLavorativa> posizioniLavorative = new HashSet<>();
-    @ManyToMany(mappedBy = "posizioniLavorative")
-    private Set<Dipartimento> dipartimenti;
+    @ManyToOne
+    @JoinColumn(name = "id_dipartimento")
+    private Dipartimento dipartimento;
 
-    @OneToMany
-    @JoinColumn(name = "id_dipendente")
-    private Set<Dipendente> dipendenti;
+    @OneToMany(mappedBy = "posizioneLavorativa")
+    private List<Dipendente> dipendenti;
 }
 

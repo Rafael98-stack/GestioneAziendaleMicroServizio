@@ -15,6 +15,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/app/v1/Curriculum")
+@CrossOrigin(origins = "http://localhost:8072")
 public class CurriculumController {
     @Autowired
     CurriculumService curriculumService;

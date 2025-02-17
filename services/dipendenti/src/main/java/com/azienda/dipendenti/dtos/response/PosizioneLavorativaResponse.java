@@ -4,6 +4,8 @@ import lombok.Builder;
 
 @Builder
 public record PosizioneLavorativaResponse(
-        Long id
+        Long id,
+        String nome,
+        String descrizione
 ) {
 }

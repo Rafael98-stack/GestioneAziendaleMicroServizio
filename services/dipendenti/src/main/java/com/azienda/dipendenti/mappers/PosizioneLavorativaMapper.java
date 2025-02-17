@@ -1,6 +1,7 @@
 package com.azienda.dipendenti.mappers;
 
 import com.azienda.dipendenti.dtos.request.PosizioneLavorativaRequestInsert;
+import com.azienda.dipendenti.dtos.response.PosizioneLavorativaResponse;
 import com.azienda.dipendenti.entities.PosizioneLavorativa;
 import com.azienda.dipendenti.repositories.DipartimentoRepository;
 import com.azienda.dipendenti.services.DipartimentoService;
@@ -29,6 +30,15 @@ public class PosizioneLavorativaMapper {
                 .nome(request.nome())
                 .descrizione(request.descrizione())
                 .dipartimento(dipartimentoService.getDipartimentoById(request.dipartimento()))
+                .build();
+    }
+
+    public PosizioneLavorativaResponse toResponse(PosizioneLavorativa posizioneLavorativa){
+        return PosizioneLavorativaResponse
+                .builder()
+                .id(posizioneLavorativa.getId())
+                .nome(posizioneLavorativa.getNome())
+                .descrizione(posizioneLavorativa.getDescrizione())
                 .build();
     }
 }

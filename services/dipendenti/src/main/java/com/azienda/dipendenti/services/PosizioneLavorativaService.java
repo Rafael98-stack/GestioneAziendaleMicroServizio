@@ -2,6 +2,7 @@ package com.azienda.dipendenti.services;
 
 import com.azienda.dipendenti.dtos.request.PosizioneLavorativaRequestInsert;
 import com.azienda.dipendenti.dtos.request.PosizioneLavorativaRequestUpdate;
+import com.azienda.dipendenti.dtos.response.EntityIdResponse;
 import com.azienda.dipendenti.dtos.response.PosizioneLavorativaResponse;
 import com.azienda.dipendenti.entities.Dipendente;
 import com.azienda.dipendenti.entities.PosizioneLavorativa;
@@ -44,13 +45,20 @@ public class PosizioneLavorativaService {
                 .orElseThrow(() -> new Exception("posizione non trovata"));
     }
 
-    public List<PosizioneLavorativa> getAll(){
-        return posizioneLavorativaRepository.findAll();
+    public PosizioneLavorativaResponse getByIdToResponse(Long id) throws Exception {
+        return posizioneLavorativaMapper
+                .toResponse(posizioneLavorativaRepository
+                        .findById(id)
+                        .orElseThrow(() -> new Exception("posizione non trovata")));
     }
 
-    public PosizioneLavorativaResponse create(PosizioneLavorativaRequestInsert request) throws Exception {
+    public List<PosizioneLavorativaResponse> getAll(){
+        return posizioneLavorativaRepository.findAll().stream().map(posizioneLavorativaMapper::toResponse).toList();
+    }
+
+    public EntityIdResponse create(PosizioneLavorativaRequestInsert request) throws Exception {
         PosizioneLavorativa posizioneLavorativa = posizioneLavorativaMapper.fromPosizioneLavorativaRequest(request);
-        return PosizioneLavorativaResponse
+        return EntityIdResponse
                 .builder()
                 .id(posizioneLavorativaRepository.save(posizioneLavorativa).getId())
                 .build();
@@ -63,10 +71,8 @@ public class PosizioneLavorativaService {
                 posizioneLavorativaUpdate.dipartimento() == null){
             posizioneLavorativa.setNome(posizioneLavorativaUpdate.nome());
             posizioneLavorativa.setDescrizione(posizioneLavorativaUpdate.descrizione());
-            return PosizioneLavorativaResponse
-                    .builder()
-                    .id(posizioneLavorativaRepository.save(posizioneLavorativa).getId())
-                    .build();
+            posizioneLavorativaRepository.save(posizioneLavorativa);
+            return posizioneLavorativaMapper.toResponse(posizioneLavorativa);
         }
         Dipendente dipendente = dipendeteRepository.findById(posizioneLavorativaUpdate.id_dipendente())
                 .orElseThrow(() ->  new Exception("Dipendente non trovato"));
@@ -77,11 +83,8 @@ public class PosizioneLavorativaService {
         posizioneLavorativa.setNome(posizioneLavorativaUpdate.nome());
         posizioneLavorativa.setDescrizione(posizioneLavorativaUpdate.descrizione());
         posizioneLavorativa.setDipartimento(dipartimentoService.getDipartimentoById(posizioneLavorativaUpdate.dipartimento()));
-
-        return PosizioneLavorativaResponse
-                .builder()
-                .id(posizioneLavorativaRepository.save(posizioneLavorativa).getId())
-                .build();
+        posizioneLavorativaRepository.save(posizioneLavorativa);
+        return posizioneLavorativaMapper.toResponse(posizioneLavorativa);
     }
 
     public void deleteById(Long id){

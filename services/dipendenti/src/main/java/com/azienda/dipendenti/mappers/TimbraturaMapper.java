@@ -2,6 +2,7 @@ package com.azienda.dipendenti.mappers;
 
 import com.azienda.dipendenti.dtos.request.TimbraturaRequestRegister;
 import com.azienda.dipendenti.dtos.request.TimbraturaRequestUpdate;
+import com.azienda.dipendenti.dtos.response.TimbraturaResponse;
 import com.azienda.dipendenti.entities.Timbratura;
 import com.azienda.dipendenti.repositories.TimbraturaRepository;
 import com.azienda.dipendenti.services.DipendenteService;
@@ -22,6 +23,19 @@ public class TimbraturaMapper {
         return Timbratura
                 .builder()
                 .data_corrente(LocalDate.now())
+                .build();
+    }
+
+    public TimbraturaResponse toResponse(Timbratura timbratura){
+        return TimbraturaResponse
+                .builder()
+                .id(timbratura.getId())
+                .dataCorrente(timbratura.getData_corrente())
+                .orarioEntrata(timbratura.getOrario_entrata())
+                .inizioPranzo(timbratura.getInizio_pranzo())
+                .finePranzo(timbratura.getFine_pranzo())
+                .uscite(timbratura.getUscita())
+                .idDipendente(timbratura.getDipendente().getId())
                 .build();
     }
 

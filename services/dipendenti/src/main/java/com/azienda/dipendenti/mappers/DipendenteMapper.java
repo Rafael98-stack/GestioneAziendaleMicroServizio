@@ -2,13 +2,18 @@ package com.azienda.dipendenti.mappers;
 
 import com.azienda.dipendenti.dtos.request.DipendenteRequestRegister;
 import com.azienda.dipendenti.dtos.request.DipendenteRequestUpdate;
+import com.azienda.dipendenti.dtos.response.DipendenteResponse;
 import com.azienda.dipendenti.entities.Dipartimento;
 import com.azienda.dipendenti.entities.Dipendente;
+import com.azienda.dipendenti.entities.Timbratura;
 import com.azienda.dipendenti.repositories.DipartimentoRepository;
 import com.azienda.dipendenti.repositories.PosizioneLavorativaRepository;
 import com.azienda.dipendenti.repositories.TimbraturaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
+import java.util.Set;
 
 @Service
 public class DipendenteMapper {
@@ -37,6 +42,30 @@ public class DipendenteMapper {
                 .luogo_nascita(dipendenteRequestRegister.luogo_nascita())
                 .telefono(dipendenteRequestRegister.telefono())
                 .immagine_profilo(dipendenteRequestRegister.immagine_profilo())
+                .build();
+    }
+
+    public DipendenteResponse toResponse(Dipendente dipendente){
+        return DipendenteResponse
+                .builder()
+                .id(dipendente.getId())
+                .nome(dipendente.getNome())
+                .cognome(dipendente.getCognome())
+                .email(dipendente.getEmail())
+                .password(dipendente.getPassword())
+                .dataNascita(dipendente.getData_nascita())
+                .luogoNascita(dipendente.getLuogo_nascita())
+                .telefono(dipendente.getTelefono())
+                .dipartimento(dipendente.getDipartimento().getId())
+                .posizione(dipendente.getPosizioneLavorativa().getId())
+                .commenti(Optional.ofNullable(dipendente.getCommenti()).orElse(dipendente.getCommenti()))
+                .newses(Optional.ofNullable(dipendente.getNewses()).orElse(Set.of()).stream().toList())
+                .comunicazioni(Optional.ofNullable(dipendente.getComunicazioni_aziendali()).orElse(Set.of()).stream().toList())
+                .timbrature(dipendente
+                        .getTimbratura()
+                        .stream()
+                        .map(Timbratura::getId)
+                        .toList())
                 .build();
     }
 

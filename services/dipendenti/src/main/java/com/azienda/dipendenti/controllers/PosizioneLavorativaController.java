@@ -2,8 +2,8 @@
 
  import com.azienda.dipendenti.dtos.request.PosizioneLavorativaRequestInsert;
  import com.azienda.dipendenti.dtos.request.PosizioneLavorativaRequestUpdate;
+ import com.azienda.dipendenti.dtos.response.EntityIdResponse;
  import com.azienda.dipendenti.dtos.response.PosizioneLavorativaResponse;
- import com.azienda.dipendenti.entities.PosizioneLavorativa;
  import com.azienda.dipendenti.services.PosizioneLavorativaService;
  import jakarta.validation.Valid;
  import org.springframework.beans.factory.annotation.Autowired;
@@ -21,12 +21,12 @@ public class PosizioneLavorativaController {
     private PosizioneLavorativaService posizioneLavorativaService;
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<PosizioneLavorativa> getById(@PathVariable Long id) throws Exception {
-        return new ResponseEntity<>(posizioneLavorativaService.getById(id), HttpStatus.OK);
+    public ResponseEntity<PosizioneLavorativaResponse> getById(@PathVariable Long id) throws Exception {
+        return new ResponseEntity<>(posizioneLavorativaService.getByIdToResponse(id), HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<PosizioneLavorativa>> getAll(){
+    public ResponseEntity<List<PosizioneLavorativaResponse>> getAll(){
         return  new ResponseEntity<>(posizioneLavorativaService.getAll(),HttpStatus.OK);
     }
     @PutMapping("/update/{id}")
@@ -34,15 +34,15 @@ public class PosizioneLavorativaController {
         return new ResponseEntity<>(posizioneLavorativaService.updatePosizioneById(id, request), HttpStatus.OK);
     }
     @PostMapping("/create")
-    public ResponseEntity<PosizioneLavorativaResponse> create(@RequestBody @Valid PosizioneLavorativaRequestInsert request) throws Exception {
+    public ResponseEntity<EntityIdResponse> create(@RequestBody @Valid PosizioneLavorativaRequestInsert request) throws Exception {
         return new ResponseEntity<>(posizioneLavorativaService.create(request), HttpStatus.CREATED);
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<PosizioneLavorativaResponse> deleteById(@PathVariable Long id){
+    public ResponseEntity<EntityIdResponse> deleteById(@PathVariable Long id){
         posizioneLavorativaService.deleteById(id);
         return new ResponseEntity<>(
-                new PosizioneLavorativaResponse(id),HttpStatus.OK);
+                new EntityIdResponse(id),HttpStatus.OK);
     }
 
     @GetMapping("/type/{id}")

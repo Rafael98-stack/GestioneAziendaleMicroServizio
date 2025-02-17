@@ -3,7 +3,7 @@ package com.azienda.dipendenti.controllers;
 import com.azienda.dipendenti.dtos.request.DipartimentoRequestInsert;
 import com.azienda.dipendenti.dtos.request.DipartimentoRequestUpdate;
 import com.azienda.dipendenti.dtos.response.DipartimentoResponse;
-import com.azienda.dipendenti.entities.Dipartimento;
+import com.azienda.dipendenti.dtos.response.EntityIdResponse;
 import com.azienda.dipendenti.services.DipartimentoService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,17 +22,17 @@ public class DipartimentoController {
     DipartimentoService dipartimentoService;
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Dipartimento> getById(@PathVariable Long id) throws Exception {
-        return new ResponseEntity<>(dipartimentoService.getDipartimentoById(id), HttpStatus.OK);
+    public ResponseEntity<DipartimentoResponse> getById(@PathVariable Long id) throws Exception {
+        return new ResponseEntity<>(dipartimentoService.getDipartimentoByIdToResponse(id), HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Dipartimento>> getAll(){
+    public ResponseEntity<List<DipartimentoResponse>> getAll(){
         return  new ResponseEntity<>(dipartimentoService.getAllDipartimenti(),HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<DipartimentoResponse> create(@RequestBody @Valid DipartimentoRequestInsert request){
+    public ResponseEntity<EntityIdResponse> create(@RequestBody @Valid DipartimentoRequestInsert request){
         return new ResponseEntity<>(dipartimentoService.insertDipartimento(request), HttpStatus.CREATED);
     }
 
@@ -42,9 +42,9 @@ public class DipartimentoController {
         return new ResponseEntity<>(dipartimentoService.updateDipartimentoById(id, request), HttpStatus.OK);
     }
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<DipartimentoResponse> deleteById(@PathVariable Long id){
+    public ResponseEntity<EntityIdResponse> deleteById(@PathVariable Long id){
         dipartimentoService.removeDipartimentoById(id);
         return new ResponseEntity<>(
-                new DipartimentoResponse(id),HttpStatus.OK);
+                new EntityIdResponse(id),HttpStatus.OK);
     }
 }

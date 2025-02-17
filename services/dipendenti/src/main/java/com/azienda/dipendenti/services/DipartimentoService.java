@@ -3,6 +3,7 @@ package com.azienda.dipendenti.services;
 import com.azienda.dipendenti.dtos.request.DipartimentoRequestInsert;
 import com.azienda.dipendenti.dtos.request.DipartimentoRequestUpdate;
 import com.azienda.dipendenti.dtos.response.DipartimentoResponse;
+import com.azienda.dipendenti.dtos.response.EntityIdResponse;
 import com.azienda.dipendenti.entities.Dipartimento;
 import com.azienda.dipendenti.entities.Dipendente;
 import com.azienda.dipendenti.mappers.DipartimentoMapper;
@@ -35,18 +36,18 @@ public class DipartimentoService {
         this.dipendeteRepository = dipendeteRepository;
     }
 
-    public DipartimentoResponse insertDipartimento(DipartimentoRequestInsert dipartimentoRequestInsert){
+    public EntityIdResponse insertDipartimento(DipartimentoRequestInsert dipartimentoRequestInsert){
     Dipartimento dipartimento = dipartimentoMapper.fromDipartimentoRequestInsert(dipartimentoRequestInsert);
-
-        return DipartimentoResponse
-                .builder()
-                .id(dipartimentoRepository.save(dipartimento).getId())
-                .build();
+    dipartimentoRepository.save(dipartimento);
+        return new EntityIdResponse(dipartimento.getId());
     }
 
-    public Dipartimento getDipartimentoById(Long id_dipartimento) throws Exception {
-        return dipartimentoRepository.findById(id_dipartimento)
-                .orElseThrow(() -> new Exception("Dipartimento con id " + id_dipartimento + " non trovato"));
+    public Dipartimento getDipartimentoById(Long id) throws Exception {
+        return dipartimentoRepository.findById(id).orElseThrow(() -> new Exception("Dipartimento con id " + id + " non esiste"));
+    }
+    public DipartimentoResponse getDipartimentoByIdToResponse(Long id_dipartimento) throws Exception {
+        return dipartimentoMapper.toResponse(dipartimentoRepository.findById(id_dipartimento)
+                .orElseThrow(() -> new Exception("Dipartimento con id " + id_dipartimento + " non trovato")));
     }
 
     public DipartimentoResponse updateDipartimentoById(Long id_dipartimento, DipartimentoRequestUpdate dipartimentoRequestUpdate) throws Exception {
@@ -57,10 +58,8 @@ public class DipartimentoService {
         ){
             dipartimento.setNome(dipartimentoRequestUpdate.nome());
             dipartimento.setDescrizione(dipartimentoRequestUpdate.descrizione());
-            return DipartimentoResponse
-                    .builder()
-                    .id(dipartimentoRepository.save(dipartimento).getId())
-                    .build();
+            dipartimentoRepository.save(dipartimento);
+            return dipartimentoMapper.toResponse(dipartimento);
         }
         dipartimento.setNome(dipartimentoRequestUpdate.nome());
         dipartimento.setDescrizione(dipartimentoRequestUpdate.descrizione());
@@ -78,15 +77,13 @@ public class DipartimentoService {
 
         dipendente.setDipartimento(dipartimento);
         dipendeteRepository.save(dipendente);
+        dipartimentoRepository.save(dipartimento);
 
-        return DipartimentoResponse
-                .builder()
-                .id(dipartimentoRepository.save(dipartimento).getId())
-                .build();
+        return dipartimentoMapper.toResponse(dipartimento);
     }
 
-    public List<Dipartimento> getAllDipartimenti(){
-        return dipartimentoRepository.findAll();
+    public List<DipartimentoResponse> getAllDipartimenti(){
+        return dipartimentoRepository.findAll().stream().map(dipartimentoMapper::toResponse).toList();
     }
 
     public void removeDipartimentoById(Long id_dipartimento){

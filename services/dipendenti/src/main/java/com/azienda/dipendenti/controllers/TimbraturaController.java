@@ -2,8 +2,8 @@ package com.azienda.dipendenti.controllers;
 
 import com.azienda.dipendenti.dtos.request.TimbraturaRequestRegister;
 import com.azienda.dipendenti.dtos.request.TimbraturaRequestUpdate;
+import com.azienda.dipendenti.dtos.response.EntityIdResponse;
 import com.azienda.dipendenti.dtos.response.TimbraturaResponse;
-import com.azienda.dipendenti.entities.Timbratura;
 import com.azienda.dipendenti.services.TimbraturaService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,17 +21,17 @@ public class TimbraturaController {
     TimbraturaService timbraturaService;
 
     @GetMapping("/get/{id}")
-    public ResponseEntity<Timbratura> getById(@PathVariable Long id){
-        return new ResponseEntity<>(timbraturaService.getTimbraturaById(id), HttpStatus.OK);
+    public ResponseEntity<TimbraturaResponse> getById(@PathVariable Long id){
+        return new ResponseEntity<>(timbraturaService.getTimbraturaByIdToResponse(id), HttpStatus.OK);
     }
 
     @GetMapping("/all")
-    public ResponseEntity<List<Timbratura>> getAll(){
+    public ResponseEntity<List<TimbraturaResponse>> getAll(){
         return  new ResponseEntity<>(timbraturaService.getAllTimbratura(),HttpStatus.OK);
     }
 
     @PostMapping("/create")
-    public ResponseEntity<TimbraturaResponse> create(@RequestBody @Valid TimbraturaRequestRegister request){
+    public ResponseEntity<EntityIdResponse> create(@RequestBody @Valid TimbraturaRequestRegister request){
         return new ResponseEntity<>(timbraturaService.registerTimbratura(request), HttpStatus.CREATED);
     }
 
@@ -42,9 +42,9 @@ public ResponseEntity<TimbraturaResponse> update( @RequestBody @Valid Timbratura
     }
 
     @DeleteMapping("/delete/{id}")
-    public ResponseEntity<TimbraturaResponse> deleteById(@PathVariable Long id){
+    public ResponseEntity<EntityIdResponse> deleteById(@PathVariable Long id){
         timbraturaService.removeTimbraturaById(id);
         return new ResponseEntity<>(
-                new TimbraturaResponse(id),HttpStatus.OK);
+                new EntityIdResponse(id),HttpStatus.OK);
     }
 }

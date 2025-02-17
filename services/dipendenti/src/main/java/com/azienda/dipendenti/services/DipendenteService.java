@@ -3,6 +3,7 @@ package com.azienda.dipendenti.services;
 import com.azienda.dipendenti.dtos.request.DipendenteRequestRegister;
 import com.azienda.dipendenti.dtos.request.DipendenteRequestUpdate;
 import com.azienda.dipendenti.dtos.response.DipendenteResponse;
+import com.azienda.dipendenti.dtos.response.EntityIdResponse;
 import com.azienda.dipendenti.entities.Dipendente;
 import com.azienda.dipendenti.mappers.DipendenteMapper;
 import com.azienda.dipendenti.repositories.DipartimentoRepository;
@@ -34,16 +35,12 @@ public class DipendenteService {
         this.posizioneLavorativaRepository = posizioneLavorativaRepository;
     }
 
-    public DipendenteResponse registerDipendente(DipendenteRequestRegister dipendenteRequestRegister){
+    public EntityIdResponse registerDipendente(DipendenteRequestRegister dipendenteRequestRegister){
         Dipendente dipendente = dipendenteMapper.fromDipendenteRequestRegister(dipendenteRequestRegister);
-      return DipendenteResponse
+      return EntityIdResponse
               .builder()
               .id(dipendeteRepository.save(dipendente).getId())
               .build();
-    }
-
-    public void insertDipendente(Dipendente dipendente){
-        dipendeteRepository.save(dipendente);
     }
 
     public Dipendente getDipendenteById(Long id_dipendente){
@@ -51,8 +48,19 @@ public class DipendenteService {
                 .orElseThrow(() -> new EntityNotFoundException("dipendente con id " + id_dipendente + " non trovato"));
     }
 
-    public List<Dipendente> getAllDipendenti(){
-        return dipendeteRepository.findAll();
+    public DipendenteResponse getDipendenteByIdToResponse(Long id){
+        return dipendenteMapper
+                .toResponse(dipendeteRepository
+                        .findById(id)
+                        .orElseThrow(() -> new EntityNotFoundException("dipendente con id " + id + " non trovato")));
+    }
+
+    public List<DipendenteResponse> getAllDipendenti(){
+        return dipendeteRepository
+                .findAll()
+                .stream()
+                .map(dipendenteMapper::toResponse)
+                .toList();
     }
 
     public DipendenteResponse updateDipendeteById(Long id_dipendente, DipendenteRequestUpdate dipendenteRequestUpdate) throws Exception {
@@ -72,10 +80,7 @@ public class DipendenteService {
                 .findById(dipendenteRequestUpdate.id_posizione())
                 .orElseThrow(()-> new Exception("Posizione lavorativa con id " + dipendenteRequestUpdate.id_posizione() + " non trovato")));
 
-        return DipendenteResponse
-                .builder()
-                .id(dipendeteRepository.save(dipendente).getId())
-                .build();
+        return dipendenteMapper.toResponse(dipendente);
     }
 
     public void removeDipendenteById(Long id_dipendente){

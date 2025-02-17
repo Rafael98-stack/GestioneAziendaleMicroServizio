@@ -16,11 +16,11 @@ spring:
         - id: dipendente-service
           uri: http://localhost:4200
           predicates:
-            - Path=/app/v1/Dipendente
+            - Path=/app/v1/Dipendente/**
         - id: newses-service
           uri: http://localhost:8073
           predicates:
-            - Path=/app/v1/News
+            - Path=/app/v1/News/**
 
 eureka:
   client:

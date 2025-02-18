@@ -16,11 +16,35 @@ spring:
         - id: dipendente-service
           uri: http://localhost:8072
           predicates:
-            - Path=/app/v1/**
+            - Path=/app/v1/Dipendente/**
+        - id: dipartimento-service
+          uri: http://localhost:8072
+          predicates:
+            - Path=/app/v1/Dipartimento/**
+        - id: curriculum-service
+          uri: http://localhost:8072
+          predicates:
+            - Path=/app/v1/Curriculum/**
+        - id: posizione-service
+          uri: http://localhost:8072
+          predicates:
+            - Path=/app/v1/posizionelavorativa/**
+        - id: timbratura-service
+          uri: http://localhost:8072
+          predicates:
+            - Path=/app/v1/Timbratura/**
         - id: newses-service
           uri: http://localhost:8073
           predicates:
-            - Path=/app/v1/**
+            - Path=/app/v1/News/**
+        - id: comunicazioni-service
+          uri: http://localhost:8073
+          predicates:
+            - Path=/app/v1/comunicaziniaziendali/**
+        - id: commento-service
+          uri: http://localhost:8073
+          predicates:
+            - Path=/app/v1/Commento/**
 
 eureka:
   client:

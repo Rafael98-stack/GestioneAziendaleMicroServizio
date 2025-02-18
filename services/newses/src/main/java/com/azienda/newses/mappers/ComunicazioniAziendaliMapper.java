@@ -24,6 +24,7 @@ public class ComunicazioniAziendaliMapper
               .builder()
               .titolo(request.titolo())
               .contenuto(request.contenuto())
+              .dipendente(request.id_dipendente())
               .build();
   }
 }

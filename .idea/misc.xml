@@ -17,6 +17,7 @@
         <option value="$PROJECT_DIR$/services/comunicazioni-aziendali/pom.xml" />
         <option value="$PROJECT_DIR$/services/newses/pom.xml" />
         <option value="$PROJECT_DIR$/services/api_gataway/pom.xml" />
+        <option value="$PROJECT_DIR$/services/notifications/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">

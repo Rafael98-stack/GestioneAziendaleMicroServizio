@@ -22,7 +22,7 @@ public class TimbraturaMapper {
     public Timbratura fromTimbraturaRequestRegister(TimbraturaRequestRegister timbraturaRequestRegister) {
         return Timbratura
                 .builder()
-                .data_corrente(LocalDate.now())
+                .dataCorrente(LocalDate.now())
                 .build();
     }
 
@@ -30,7 +30,7 @@ public class TimbraturaMapper {
         return TimbraturaResponse
                 .builder()
                 .id(timbratura.getId())
-                .dataCorrente(timbratura.getData_corrente())
+                .dataCorrente(timbratura.getDataCorrente())
                 .orarioEntrata(timbratura.getOrario_entrata())
                 .inizioPranzo(timbratura.getInizio_pranzo())
                 .finePranzo(timbratura.getFine_pranzo())

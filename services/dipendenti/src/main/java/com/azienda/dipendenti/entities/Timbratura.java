@@ -21,7 +21,7 @@ public class Timbratura {
     private LocalDateTime inizio_pranzo;
     private LocalDateTime fine_pranzo;
     private LocalDateTime uscita;
-    private LocalDate data_corrente;
+    private LocalDate dataCorrente;
 
     @ManyToOne
     @JoinColumn(name = "id_dipendente")

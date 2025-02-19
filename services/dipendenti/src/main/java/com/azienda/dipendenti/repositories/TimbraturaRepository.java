@@ -7,9 +7,13 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import java.time.LocalDate;
+import java.util.List;
+
 @Repository
 
 public interface TimbraturaRepository extends JpaRepository<Timbratura,Long> {
 
     List<Timbratura> findByOrarioInizioBetween(LocalDateTime start, LocalDateTime end);
+    List<Timbratura> findBydata_corrente(LocalDate data);
 }

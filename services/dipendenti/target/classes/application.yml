@@ -23,6 +23,17 @@ spring:
       properties:
         spring.json.type.mapping: orderConfirmation:com.azienda.dipendenti.kafka.OrderConfirmation
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: fggabrielito@gmail.com
+    password: xsal rvqs pwyq dkgn
+    protocol: smtp
+    smtp:
+      auth: true
+      starttls:
+        enable: true
+    debug: true
 server:
   port: 8072
 

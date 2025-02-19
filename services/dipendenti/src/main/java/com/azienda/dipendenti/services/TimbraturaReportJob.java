@@ -1,18 +1,19 @@
 package com.azienda.dipendenti.services;
 
 
-import com.azienda.dipendenti.controllers.TimbraturaController;
 import com.azienda.dipendenti.entities.Timbratura;
 import com.azienda.dipendenti.repositories.TimbraturaRepository;
-import com.netflix.discovery.converters.Auto;
 import jakarta.annotation.PostConstruct;
 import jakarta.mail.MessagingException;
+import jakarta.mail.internet.MimeMessage;
 import org.quartz.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.FileSystemResource;
 import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -42,9 +43,24 @@ public class TimbraturaReportJob implements Job
             String filePath = generateCSV(timbrature);
             sendEmailWithAttachment("pellegrininanda96@gmail.com", filePath);
             System.out.println("Report timbrature inviato con successo!");
-        } catch (MessagingException | IOException e) {
+        } catch (MessagingException e) {
             e.printStackTrace();
         }
+    }
+
+    public void sendEmailWithAttachment(String to, String filePath) throws MessagingException {
+
+        MimeMessage message = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true);
+
+        helper.setTo(to);
+        helper.setSubject("Report Timbrature Giornaliero");
+        helper.setText("In allegato il report delle timbrature giornaliere.");
+
+        FileSystemResource file = new FileSystemResource(new File(filePath));
+        helper.addAttachment(file.getFilename(), file);
+
+        javaMailSender.send(message);
     }
 
     public void timbratureGiornaliereScheduler() throws SchedulerException {
@@ -62,7 +78,7 @@ public class TimbraturaReportJob implements Job
     private Trigger buildJobTrigger(JobDetail jobDetail) {
         return TriggerBuilder.newTrigger()
                 .forJob(jobDetail)
-                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(18, 5))
+                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(14, 51))
                 .build();
     }
 

@@ -13,7 +13,9 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
-import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -32,7 +34,7 @@ public class TimbraturaReportJob implements Job
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException
     {
-        List<Timbratura> timbrature = timbraturaRepository.findBydata_corrente(LocalDate.now());
+        List<Timbratura> timbrature = timbraturaRepository.findBydataCorrente(LocalDate.now());
 
         if (timbrature.isEmpty()) {
             System.out.println("Nessuna timbratura registrata per oggi.");
@@ -41,14 +43,16 @@ public class TimbraturaReportJob implements Job
 
         try {
             String filePath = generateCSV(timbrature);
+            //sendEmailWithAttachment("localhost:1025", filePath);
             sendEmailWithAttachment("pellegrininanda96@gmail.com", filePath);
+            sendEmailWithAttachment("fggabrielito@gmail.com", filePath);
             System.out.println("Report timbrature inviato con successo!");
-        } catch (MessagingException e) {
+        } catch (MessagingException | IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void sendEmailWithAttachment(String to, String filePath) throws MessagingException {
+    public void sendEmailWithAttachment(String to, String filePath) throws MessagingException, IOException {
 
         MimeMessage message = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message, true);
@@ -57,10 +61,13 @@ public class TimbraturaReportJob implements Job
         helper.setSubject("Report Timbrature Giornaliero");
         helper.setText("In allegato il report delle timbrature giornaliere.");
 
-        FileSystemResource file = new FileSystemResource(new File(filePath));
+        Path tempFile = Files.createTempFile("timbrature", ".csv");
+        Files.write(tempFile, filePath.getBytes());
+        FileSystemResource file = new FileSystemResource(tempFile.toFile());
         helper.addAttachment(file.getFilename(), file);
 
         javaMailSender.send(message);
+        tempFile.toFile().deleteOnExit();
     }
 
     public void timbratureGiornaliereScheduler() throws SchedulerException {
@@ -78,7 +85,7 @@ public class TimbraturaReportJob implements Job
     private Trigger buildJobTrigger(JobDetail jobDetail) {
         return TriggerBuilder.newTrigger()
                 .forJob(jobDetail)
-                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(14, 51))
+                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(18, 05))
                 .build();
     }
 
@@ -87,7 +94,7 @@ public class TimbraturaReportJob implements Job
         csvBuilder.append("ID, DipendenteID, Ingresso, Uscita, Inizio Pausa, Fine Pausa\n");
         for (Timbratura t : timbrature) {
             csvBuilder.append(t.getId()).append(",")
-                    .append(t.getDipendente()).append(",")
+                    .append(t.getDipendente().getId()).append(",")
                     .append(t.getOrario_entrata()).append(",")
                     .append(t.getInizio_pranzo()).append(",")
                     .append(t.getFine_pranzo()).append(",")

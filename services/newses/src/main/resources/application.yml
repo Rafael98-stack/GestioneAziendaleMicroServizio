@@ -1,6 +1,6 @@
 spring:
   application:
-    name:-service
+    name: newses-service
   config:
     import: optional:configserver:http://localhost:8888
   datasource:
@@ -17,11 +17,11 @@ spring:
   kafka:
     producer:
       bootstrap-server: localhost:9092
-      group-id: order-group
+      group-id: notification-group
       key-serializer: org.apache.kafka.common.serialization.StringSerializer
       value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
       properties:
-        spring.json.type.mapping: orderConfirmation:com.azienda.newses.kafka.OrderConfirmation
+        spring.json.type.mapping: newses:com.azienda.newses.kafka.ComunicazioneAziendaleMessage
 
 server:
   port: 8073

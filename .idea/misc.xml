@@ -17,6 +17,7 @@
         <option value="$PROJECT_DIR$/services/comunicazioni-aziendali/pom.xml" />
         <option value="$PROJECT_DIR$/services/newses/pom.xml" />
         <option value="$PROJECT_DIR$/services/api_gataway/pom.xml" />
+        <option value="$PROJECT_DIR$/services/notifications/pom.xml" />
       </list>
     </option>
     <option name="ignoredFiles">
@@ -29,7 +30,7 @@
       </set>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_17" default="true" project-jdk-name="17" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_23" default="true" project-jdk-name="23" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/out" />
   </component>
 </project>

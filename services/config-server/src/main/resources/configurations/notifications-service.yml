@@ -1,0 +1,40 @@
+spring:
+  application:
+    name: notifications-service
+  config:
+    import: optional:configserver:http://localhost:8888
+  data:
+    mongodb:
+      username: azienda
+      password: mypassword
+      host: localhost
+      port: 27017
+      database: notifications
+      authentication-database: admin
+
+  kafka:
+    consumer:
+      bootstrap-server: localhost:9092
+      group-id: notification-group
+      auto-offset-reset: earliest
+      key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
+      properties:
+        spring.json.trusted.packages: 'com.azienda.notifications.kafka.news,com.azienda.kafka.notifications.comunicazione'
+        spring.json.type.mapping:
+          newses:com.azienda.notifications.kafka.comunicazione.ComunicazioneConfirmation
+
+  mail:
+    host: localhost
+    port: 1080
+    username: azienda
+    password: mypassword
+    properties:
+      mail:
+        smtp:
+          trust: "*"
+        auth: true
+        starttls:
+          enabled: true
+        connectiontimeout: 5000
+        timeout: 3000

@@ -12,7 +12,7 @@
         <module name="discovery" />
         <module name="dipendenti" />
       </profile>
-      <profile name="Annotation profile for newses" enabled="true">
+      <profile name="Annotation profile for notifications" enabled="true">
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
@@ -20,6 +20,7 @@
           <entry name="$MAVEN_REPOSITORY$/org/projectlombok/lombok/1.18.36/lombok-1.18.36.jar" />
         </processorPath>
         <module name="newses" />
+        <module name="notifications" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
@@ -40,6 +41,7 @@
       <module name="dipendenti" options="-parameters" />
       <module name="discovery" options="-parameters" />
       <module name="newses" options="-parameters" />
+      <module name="notifications" options="-parameters" />
       <module name="posizioni-lavorative" options="-parameters" />
       <module name="timbrature" options="-parameters" />
     </option>

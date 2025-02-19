@@ -16,7 +16,7 @@ public class ComunicazioniProducer {
     public void sendConfermaComunicazione(ComunicazioneAziendaleMessage comunicazioneAziendaleMessage) {
         Message<ComunicazioneAziendaleMessage> message = MessageBuilder
                 .withPayload(comunicazioneAziendaleMessage)
-                .setHeader(KafkaHeaders.TOPIC, "order-topic")
+                .setHeader(KafkaHeaders.TOPIC, "comunicazione-topic")
                 .build();
         kafkaTemplate.send(message);
     }

@@ -85,7 +85,8 @@ public class TimbraturaReportJob implements Job
     private Trigger buildJobTrigger(JobDetail jobDetail) {
         return TriggerBuilder.newTrigger()
                 .forJob(jobDetail)
-                .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(18, 05))
+                .withSchedule(CronScheduleBuilder.cronSchedule("0 * * * ?"))
+               // .withSchedule(CronScheduleBuilder.dailyAtHourAndMinute(14, 53))
                 .build();
     }
 

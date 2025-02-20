@@ -28,8 +28,8 @@ public class AppConfig {
         mailSender.setPassword(mailPassword);
         Properties properties = mailSender.getJavaMailProperties();
         properties.put("mail.transport.protocol", "smtp");
-        properties.put("mail.smtp.auth", "true");
-        properties.put("mail.smtp.starttls.enable", "true");
+        properties.put("mail.smtp.auth", "false");
+        properties.put("mail.smtp.starttls.enable", "false");
         properties.put("mail.debug", "true");
         return mailSender;
     }
